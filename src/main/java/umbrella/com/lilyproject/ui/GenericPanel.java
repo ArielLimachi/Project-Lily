@@ -5,32 +5,41 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import umbrella.com.lilyproject.ui.graphicElements.GraphicElement;
 import umbrella.com.lilyproject.ui.graphicElements.LineElement;
+import umbrella.com.lilyproject.ui.graphicElements.RectangleElement;
+import umbrella.com.lilyproject.ui.graphicElements.TriangleElement;
 
 public class GenericPanel extends JPanel {
 
 	public void paint(Graphics graphics) {
 		super.paint(graphics);
 		Graphics2D graphics2D = (Graphics2D) graphics;
-
-		int x[] = { 10, 30, 40, 50, 110, 140 };		  
-        // y coordinates of vertices
-        int y[] = { 140, 110, 50, 40, 30, 10 };  
-        // number of vertices
-        int numberofpoints = 6; 
-        
-		Polygon polygon = new Polygon(x,y,numberofpoints);
-		GraphicElement line = new GraphicElement(polygon);
-		line.draw(graphics2D);
 		
-		LineElement myLine = new LineElement(new Point(20,150), new Point(150,20));
+		List<Point> points3 = new ArrayList<>();
+		points3.add(new Point(100, 100));
+		points3.add(new Point(500, 100));		
+		points3.add(new Point(300, 300));
+		TriangleElement triangle = new TriangleElement(points3);
+		triangle.draw(graphics2D);
+				
+		List<Point> points2 = new ArrayList<>();
+		points2.add(new Point(200, 200));
+		points2.add(new Point(400, 400));
+		LineElement myLine = new LineElement(points2);
 		myLine.draw(graphics2D);
 		
-		LineElement myLine2 = new LineElement(new Point(50,200), new Point(150,20));
-		myLine2.draw(graphics2D);
+		List<Point> points1 = new ArrayList<>();
+		points1.add(new Point(300, 250));
+		points1.add(new Point(600, 250));
+		points1.add(new Point(600, 550));
+		points1.add(new Point(300, 550));
+		RectangleElement square = new RectangleElement(points1);
+		square.draw(graphics2D);
 	}
 }
