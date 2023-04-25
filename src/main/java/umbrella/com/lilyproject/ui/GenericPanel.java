@@ -3,31 +3,43 @@ package umbrella.com.lilyproject.ui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
-public class GenericPanel extends JPanel{
+import umbrella.com.lilyproject.ui.graphicElements.GraphicElement;
+import umbrella.com.lilyproject.ui.graphicElements.LineElement;
+import umbrella.com.lilyproject.ui.graphicElements.RectangleElement;
+import umbrella.com.lilyproject.ui.graphicElements.TriangleElement;
 
-	public void paint (Graphics graphics) {
+public class GenericPanel extends JPanel {
+
+	public void paint(Graphics graphics) {
 		super.paint(graphics);
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		
-		graphics2D.setColor (Color.blue);
-		graphics2D.drawLine (0, 70, 100, 70);
-		graphics2D.drawRect (150, 70, 50, 70);
-		graphics2D.drawRoundRect (250, 70, 50, 70, 6, 6);
-		graphics2D.drawOval (350, 70, 50, 70);
-        int [] vx1 = {500, 550, 450};
-        int [] vy1 = {70, 120, 120};
-        graphics2D.drawPolygon (vx1, vy1, 3);
-
-        graphics2D.setColor (Color.red);
-        graphics2D.fillRect (150, 270, 50, 70);
-        graphics2D.fillRoundRect (250, 270, 50, 70, 6, 6);
-        graphics2D.fillOval (350, 270, 50, 70);
-        int [] vx2 = {500, 550, 450};
-        int [] vy2 = {270, 320, 320};
-        graphics2D.fillPolygon (vx2, vy2, 3);
+		List<Point> points3 = new ArrayList<>();
+		points3.add(new Point(100, 100));
+		points3.add(new Point(500, 100));		
+		points3.add(new Point(300, 300));
+		TriangleElement triangle = new TriangleElement(points3);
+		triangle.draw(graphics2D);
+				
+		List<Point> points2 = new ArrayList<>();
+		points2.add(new Point(200, 200));
+		points2.add(new Point(400, 400));
+		LineElement myLine = new LineElement(points2);
+		myLine.draw(graphics2D);
+		
+		List<Point> points1 = new ArrayList<>();
+		points1.add(new Point(300, 250));
+		points1.add(new Point(600, 250));
+		points1.add(new Point(600, 550));
+		points1.add(new Point(300, 550));
+		RectangleElement square = new RectangleElement(points1);
+		square.draw(graphics2D);
 	}
-
 }
