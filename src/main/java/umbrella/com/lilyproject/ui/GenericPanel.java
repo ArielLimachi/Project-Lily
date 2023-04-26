@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import umbrella.com.lilyproject.ui.graphicElements.GraphicElement;
+import umbrella.com.lilyproject.ui.graphicElements.PolygonGraphicElement;
 import umbrella.com.lilyproject.ui.graphicElements.LineElement;
 import umbrella.com.lilyproject.ui.graphicElements.RectangleElement;
 import umbrella.com.lilyproject.ui.graphicElements.TriangleElement;
@@ -40,6 +40,9 @@ public class GenericPanel extends JPanel {
 		points1.add(new Point(600, 550));
 		points1.add(new Point(300, 550));
 		RectangleElement square = new RectangleElement(points1);
+		
 		square.draw(graphics2D);
+		
+		
 	}
 }
