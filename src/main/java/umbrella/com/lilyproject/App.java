@@ -1,7 +1,9 @@
 package umbrella.com.lilyproject;
 
+import umbrella.com.lilyproject.testers.UsbTester;
 import umbrella.com.lilyproject.ui.TrashFrame;
 import umbrella.com.lilyproject.usb.ArduinoSerialUtility;
+import umbrella.com.lilyproject.usb.UsbCommunicator;
 
 /**
  * Hello world!
@@ -14,6 +16,7 @@ public class App {
 
 		// TrashFrame frame = new TrashFrame();
 
+		/*
 		ArduinoSerialUtility serialUtility = new ArduinoSerialUtility();
 
 		// Replace "COM3" with the correct port name for your Arduino
@@ -49,5 +52,17 @@ public class App {
 		} else {
 			System.err.println("Failed to open the port.");
 		}
+		*/
+		
+		/*
+		UsbCommunicator comm = new UsbCommunicator();
+		comm.openPort();
+		comm.sendData("hola");
+		comm.receiveData();
+		comm.closePort();
+		*/
+		
+		UsbTester usbTestFrame = new UsbTester();
+		
 	}
 }

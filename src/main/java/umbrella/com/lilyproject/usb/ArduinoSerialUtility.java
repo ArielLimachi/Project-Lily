@@ -1,10 +1,14 @@
 package umbrella.com.lilyproject.usb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fazecast.jSerialComm.*;
 
 public class ArduinoSerialUtility {
 
 	private SerialPort arduinoPort;
+	private List<Character> receivedDataBuffer = new ArrayList<>();
 
 	public ArduinoSerialUtility() {
 		arduinoPort = null;
@@ -13,6 +17,7 @@ public class ArduinoSerialUtility {
 	public boolean openPort(String portName, int baudRate) {
 		arduinoPort = SerialPort.getCommPort(portName);
 		arduinoPort.setComPortParameters(baudRate, 8, 1, 0);
+
 		return arduinoPort.openPort();
 	}
 
@@ -23,31 +28,42 @@ public class ArduinoSerialUtility {
 		return false;
 	}
 
-	public String readData() {
-		if (arduinoPort == null || !arduinoPort.isOpen()) {
-			return null;
-		}
-		StringBuilder dataBuffer = new StringBuilder();
-		byte[] buffer = new byte[1024];
-		int numBytes;
+	public void initializeReader() {
+		arduinoPort.addDataListener(new SerialPortDataListener() {
 
-		try {
-			while ((numBytes = arduinoPort.readBytes(buffer, buffer.length)) > 0) {
-				String receivedData = new String(buffer, 0, numBytes);
-				dataBuffer.append(receivedData);
+			@Override
+			public void serialEvent(SerialPortEvent event) {
+				if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
+					byte[] newData = new byte[arduinoPort.bytesAvailable()];
+					arduinoPort.readBytes(newData, newData.length);
 
-				// Check if the received data contains the delimiter '\n'
-				int delimiterIndex = dataBuffer.indexOf("\n");
-				if (delimiterIndex >= 0) {
-					String dataPacket = dataBuffer.substring(0, delimiterIndex);
-					dataBuffer.delete(0, delimiterIndex + 1); // Remove the processed data from the buffer
-					return dataPacket;
+					for (byte b : newData) {
+						char receivedChar = (char) b;
+						if (receivedChar == '\n') {
+							processReceivedData();
+						} else {
+							receivedDataBuffer.add(receivedChar);
+						}
+					}
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+
+			@Override
+			public int getListeningEvents() {
+				return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+			}
+		});
+	}
+
+	private void processReceivedData() {
+		StringBuilder receivedDataBuilder = new StringBuilder();
+		for (Character c : receivedDataBuffer) {
+			receivedDataBuilder.append(c);
 		}
-		return null;
+		receivedDataBuffer.clear();
+
+		String receivedData = receivedDataBuilder.toString().trim();
+		System.out.println("Received from Arduino: " + receivedData);
 	}
 
 	public boolean sendData(String data) {
@@ -56,4 +72,5 @@ public class ArduinoSerialUtility {
 		}
 		return arduinoPort.writeBytes((data + "\n").getBytes(), data.length() + 1) > 0;
 	}
+
 }
