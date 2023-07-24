@@ -1,8 +1,12 @@
 package umbrella.com.lilyproject;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import umbrella.com.lilyproject.testers.UsbTester;
 import umbrella.com.lilyproject.ui.TrashFrame;
 import umbrella.com.lilyproject.usb.ArduinoSerialUtility;
+import umbrella.com.lilyproject.usb.CustomUsbDataObservable;
 import umbrella.com.lilyproject.usb.UsbCommunicator;
 
 /**
@@ -64,5 +68,20 @@ public class App {
 		
 		UsbTester usbTestFrame = new UsbTester();
 		
+		/*
+		CustomUsbDataObservable usbObservable = new CustomUsbDataObservable();
+		
+		Observer observer = new Observer() {
+			
+			@Override
+			public void update(Observable o, Object arg) {
+				System.out.println("Flag is now true! Eventito!!");
+			}
+		};
+		
+		usbObservable.addObserver(observer);
+		
+		usbObservable.setFlag(true);
+		*/
 	}
 }

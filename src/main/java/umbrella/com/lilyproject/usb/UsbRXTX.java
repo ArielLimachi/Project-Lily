@@ -7,4 +7,6 @@ public interface UsbRXTX {
 	void closePort();
 	
 	void sendData(String data) ;
+	
+	String getData();
 }
