@@ -2,6 +2,8 @@ package umbrella.com.lilyproject.testers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,6 +35,16 @@ public class UsbTester extends JFrame implements ActionListener {
 
 		drawComponents();
 		comm = new UsbCommunicator();
+		
+		Observer observer = new Observer() {
+			
+			@Override
+			public void update(Observable o, Object arg) {
+				receivedData.append(comm.getReceivedData() + "\n");
+			}
+		};
+		
+		comm.addObserver(observer);
 
 		setVisible(true);
 	}
@@ -55,7 +67,8 @@ public class UsbTester extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(openPort)) {
-			comm.openPort();
+			comm.initializeArduino();	
+			//receivedData.append("XD " + comm.getData());
 		}
 
 		if (e.getSource().equals(closePort)) {
