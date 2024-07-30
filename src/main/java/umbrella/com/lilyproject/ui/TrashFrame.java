@@ -6,6 +6,8 @@ import java.awt.Point;
 import javax.swing.JFrame;
 
 import umbrella.com.lilyproject.ui.graphicComponents.GridComponent;
+import umbrella.com.lilyproject.ui.graphicElements.CustomWord;
+import umbrella.com.lilyproject.ui.graphicElements.WordBox;
 
 public class TrashFrame extends JFrame {
 
@@ -21,16 +23,23 @@ public class TrashFrame extends JFrame {
 		GridComponent grid4 = new GridComponent(new Point(0, 100), 10, 100);
 
 		grid1.setBackground(Color.YELLOW);
-		add(grid1);
+		//add(grid1);
 		
 		grid2.setBackground(Color.red);
-		add(grid2);	
+		//add(grid2);	
 		
-		add(grid3);	
+		//add(grid3);	
 		
 		grid4.setBackground(Color.CYAN);
-		add(grid4);
+		//add(grid4);
 
+		CustomWord word = new CustomWord();
+		word.setSize(100,100);
+		
+		WordBox wb = new WordBox();
+		wb.setSize(500,500);
+		add(wb);
+		
 		setVisible(true);
 	}
 

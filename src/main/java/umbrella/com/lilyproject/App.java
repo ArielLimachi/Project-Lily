@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import umbrella.com.lilyproject.testers.UsbTester;
+import umbrella.com.lilyproject.ui.GenericPanel;
 import umbrella.com.lilyproject.ui.TrashFrame;
 import umbrella.com.lilyproject.usb.ArduinoSerialUtility;
 import umbrella.com.lilyproject.usb.CustomUsbDataObservable;
@@ -66,7 +67,7 @@ public class App {
 		comm.closePort();
 		*/
 		
-		UsbTester usbTestFrame = new UsbTester();
+		//UsbTester usbTestFrame = new UsbTester(); //23 july this was commented
 		
 		/*
 		CustomUsbDataObservable usbObservable = new CustomUsbDataObservable();
@@ -83,5 +84,8 @@ public class App {
 		
 		usbObservable.setFlag(true);
 		*/
+		
+		TrashFrame tf = new TrashFrame();
+		tf.setVisible(true);
 	}
 }
