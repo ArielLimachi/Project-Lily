@@ -1,6 +1,7 @@
 package umbrella.com.lilyprofect.utils;
 
 import java.awt.BorderLayout;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -45,5 +46,11 @@ public class SwingUtils {
 	public static JPanel getPanel() {
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
 		return panel;
+	}
+	
+	//List of Font family names
+	public static String[] getFontFamilyNames(){
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        return ge.getAvailableFontFamilyNames();
 	}
 }
