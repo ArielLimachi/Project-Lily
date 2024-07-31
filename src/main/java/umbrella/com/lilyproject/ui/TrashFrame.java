@@ -1,6 +1,8 @@
 package umbrella.com.lilyproject.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 
 import javax.swing.JFrame;
@@ -35,10 +37,11 @@ public class TrashFrame extends JFrame {
 
 		CustomWord word = new CustomWord();
 		word.setSize(100,100);
-		
-		WordBox wb = new WordBox();
-		wb.setSize(500,500);
-		add(wb);
+						
+		Dimension wordBoxDimension = new Dimension(200,200);
+		WordBox wordBox = new WordBox("Pame", wordBoxDimension, new Font("Serif", Font.BOLD, 24), Color.BLACK);
+		wordBox.setSize(wordBoxDimension);
+		add(wordBox);
 		
 		setVisible(true);
 	}

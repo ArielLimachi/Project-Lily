@@ -11,36 +11,45 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import umbrella.com.lilyprofect.utils.Constants;
+
 public class WordBox extends JPanel{
 	
-	String word;
+	String word;	
 	Dimension dimension;
 	Font font;
 	Color color;
-	RectangleElement box;
 	
-	public WordBox(String word, Dimension dimension, Font font, Color color, RectangleElement box) {
+	int wordXOffset;
+	int wordYOffset;
+	int borderHorizontalOffset;
+	int borderVerticalOffset;
+	
+	public WordBox(String word, Dimension dimension, Font font, Color color) {
 		super();
 		this.word = word;
 		this.dimension = dimension;
 		this.font = font;
 		this.color = color;
-		this.box = box;	
-	}
+		
+		setDefaultValues();
+	}		
 	
-	public WordBox() {
-		dimension = new Dimension(500,500);
+	private void setDefaultValues() {
+		wordXOffset = Constants.X_AXIS_WORD_OFFSET;
+		wordYOffset = Constants.Y_AXIS_WORD_OFFSET;;
+		borderHorizontalOffset = Constants.BORDER_HORIZONTAL_OFFSET;
+		borderVerticalOffset = Constants.BORDER_VERTICAL_OFFSET;
 	}
 	
 	private RectangleElement getBorderBox() {
 		List<Point> boxPoints = new ArrayList<Point>();
-		boxPoints.add(new Point(2,2));
-		boxPoints.add(new Point(dimension.width-2,2));
-		boxPoints.add(new Point(dimension.width-2,dimension.height-2));
-		boxPoints.add(new Point(2,dimension.height-2));
+		boxPoints.add(new Point(borderHorizontalOffset, borderVerticalOffset));
+		boxPoints.add(new Point(dimension.width-borderHorizontalOffset,borderVerticalOffset));
+		boxPoints.add(new Point(dimension.width-borderHorizontalOffset,dimension.height-borderVerticalOffset));
+		boxPoints.add(new Point(borderHorizontalOffset,dimension.height-borderVerticalOffset));
 				
-		box = new RectangleElement(boxPoints);
-		return box;
+		return new RectangleElement(boxPoints);
 	}
 	
 	@Override
@@ -49,15 +58,15 @@ public class WordBox extends JPanel{
         Graphics2D g2d= (Graphics2D) g;
 
         // Set the color
-        g.setColor(Color.BLACK);
+        g.setColor(color);
         
         // Set the font
-        g.setFont(new Font("Serif", Font.BOLD, 24));
+        g.setFont(font);
         
         // Draw the string
-        g.drawString("Hello XD, World!", 50, 50);
+        g.drawString(word,wordXOffset,wordYOffset);
         
-        box = getBorderBox();
+        RectangleElement box = getBorderBox();
         box.draw(g2d);
     }
 }
