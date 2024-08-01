@@ -91,8 +91,8 @@ public class App {
 		usbObservable.setFlag(true);
 		*/
 		
-		//TrashFrame tf = new TrashFrame();
-		//tf.setVisible(true);		
+		TrashFrame tf = new TrashFrame();
+		tf.setVisible(true);		
 		
 		// Open an image file
         ImagePlus image = IJ.openImage("elipse.jpg");
@@ -103,7 +103,7 @@ public class App {
         }
 
         // Display the original image
-        image.show();
+        //image.show();
 
         // Get the image processor
         ImageProcessor processor = image.getProcessor();
