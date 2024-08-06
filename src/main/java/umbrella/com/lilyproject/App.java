@@ -3,7 +3,10 @@ package umbrella.com.lilyproject;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JFrame;
+
 import umbrella.com.lilyprofect.utils.SwingUtils;
+import umbrella.com.lilyproject.ImageProcessor.ImageProcessingMainFrame;
 import umbrella.com.lilyproject.testers.UsbTester;
 import umbrella.com.lilyproject.ui.GenericPanel;
 import umbrella.com.lilyproject.ui.TrashFrame;
@@ -91,8 +94,8 @@ public class App {
 		usbObservable.setFlag(true);
 		*/
 		
-		TrashFrame tf = new TrashFrame();
-		tf.setVisible(true);		
+		//TrashFrame tf = new TrashFrame();
+		//tf.setVisible(true);		
 		
 		// Open an image file
         ImagePlus image = IJ.openImage("elipse.jpg");
@@ -117,5 +120,9 @@ public class App {
 
         // Display the processed image
         //image.show();
+        
+        ImagePlus imagePlus = IJ.openImage("letra A.jpg");
+        ImageProcessingMainFrame ij = new ImageProcessingMainFrame(imagePlus);
+        ij.setVisible(true);
 	}
 }

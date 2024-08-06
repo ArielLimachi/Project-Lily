@@ -5,8 +5,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -79,24 +82,36 @@ public class SwingUtils {
 		BufferedImage image = null;
 		if (imagePlus != null) {
 			image = imagePlus.getBufferedImage();
-		}	
+		}
 		return image;
 	}
-	
+
 	// Function to get a Buffered Image rendered in a JPanel
 	public static JPanel getImageInPanel(BufferedImage image) {
 		JPanel panel = new JPanel() {
 			@Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (image != null) {
-        			// Draw the BufferedImage on the JPanel
-        			// g.drawImage(image, 0, 0, null);
-        			g.drawImage(image, 0, 0, null);
-        		}
-            }
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				if (image != null) {
+					// Draw the BufferedImage on the JPanel
+					// g.drawImage(image, 0, 0, null);
+					g.drawImage(image, 0, 0, null);
+				}
+			}
 		};
+
+		return panel;
+	}
+
+	public static JPanel getButtonInGridPanel(List<JButton> buttons) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout());
 		
+		for (Iterator iterator = buttons.iterator(); iterator.hasNext();) {
+			JButton jButton = (JButton) iterator.next();
+			panel.add(jButton);
+		}
+
 		return panel;
 	}
 

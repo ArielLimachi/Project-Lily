@@ -57,4 +57,13 @@ public class IJFunctions {
 		
 		return ijFunctionsNames;
 	}
+	
+	public List<Function> getIJFunctions() {
+		List<Function> ijFunctions = new ArrayList<Function>();
+		for (Map.Entry<String, Function> entry : this.ijFunctions.entrySet()) {
+			ijFunctions.add(entry.getValue());
+        }		
+		
+		return ijFunctions;
+	}
 }
