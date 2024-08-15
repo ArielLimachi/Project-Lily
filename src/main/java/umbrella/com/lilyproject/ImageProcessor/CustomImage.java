@@ -35,4 +35,8 @@ public class CustomImage extends JPanel {
 		ImagePlus resizedImagePlus = SwingUtils.resizeImage(imagePlus, Constants.REESCALE_FACTOR);
 		return SwingUtils.getBufferedImage(resizedImagePlus);
 	}
+	
+	public ImagePlus getImagePlus() {
+		return imagePlus;
+	}
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,15 +23,16 @@ import umbrella.com.lilyprofect.utils.IJFunctions;
 import umbrella.com.lilyprofect.utils.SwingUtils;
 import umbrella.com.lilyproject.ui.graphicComponents.GridComponent;
 
-public class ImageProcessingMainFrame extends JFrame implements ActionListener{
+public class ImageProcessingMainFrame extends JFrame {
 
 	private JLabel title;
-	private JPanel image;	
 	private List<JButton> processButtons;
 
 	private IJFunctions functions;
 
 	private ImagePlus imagePlus;
+	
+	CardHandler<CustomImage> imageSet;
 
 	public ImageProcessingMainFrame(ImagePlus imagePlus) {
 		//setLayout(null);
@@ -40,41 +42,60 @@ public class ImageProcessingMainFrame extends JFrame implements ActionListener{
 
 		functions = new IJFunctions();
 		this.imagePlus = imagePlus;
-		
+
 		initializeComponents();
 
 		setVisible(true);
 	}
-	
+
 	private void initializeComponents() {
+		buildHeader();
+		buildImageHandler();
+		buildButtonFunctionsGrid();
+	}
+	
+	private void buildImageHandler() {
+		initializeImageSet();
+	}
+	
+	private void initializeImageSet() {
+		imageSet = new CardHandler<CustomImage>();
+		imageSet.addCard(new CustomImage(imagePlus), 0);
+		add(imageSet);
+	}
+	
+	private void setImage(CustomImage image) {
+		imageSet.addCard(image, imageSet.getCardSetSize());
+		imageSet.next();
+	}
+	
+	private ImagePlus getCurrentImage() {
+		return imageSet.getCurrentCard().getImagePlus();
+	}
+	
+	private void buildHeader() {
 		title = SwingUtils.getLabel("Image Processing", 0, 0, 100, 40);
-		image = SwingUtils.getImageInPanel(SwingUtils.getBufferedImage(this.imagePlus));
-		
-		
+		add(title, BorderLayout.NORTH);
+	}
+	
+	private void buildButtonFunctionsGrid() {
 		processButtons = new ArrayList<JButton>();
 		Map<String, Function> functions = this.functions.getFunctions();
-		
-		for (Map.Entry<String, Function> entry : functions.entrySet() ) {
-			
+
+		for (Map.Entry<String, Function> entry : functions.entrySet()) {
+
 			JButton button = new JButton((String) entry.getKey());
-			
+
 			Function<ImagePlus, ImagePlus> function = (Function<ImagePlus, ImagePlus>) entry.getValue();
-			button.addActionListener(this);	
+			button.addActionListener(e -> {
+				ImagePlus newImage = function.apply(getCurrentImage());
+				setImage(new CustomImage(newImage));
+			});
 			processButtons.add(button);
-			//add(button);
-			
+
 		}
 		JPanel buttonsGridPanel = SwingUtils.getButtonInGridPanel(processButtons);
 		
-		add(title, BorderLayout.NORTH);
-		add(image, BorderLayout.CENTER);
 		add(buttonsGridPanel, BorderLayout.WEST);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		Object obj = event.getSource();
-		
-	}
-
 }

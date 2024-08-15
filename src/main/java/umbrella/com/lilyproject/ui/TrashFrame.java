@@ -48,7 +48,8 @@ public class TrashFrame extends JFrame {
 		wordBox.setSize(wordBoxDimension);
 		//add(wordBox);
 		
-		ImagePlus imagePlus = IJ.openImage("letra A.jpg");
+		//ImagePlus imagePlus = IJ.openImage("letra A.jpg");
+		ImagePlus imagePlus = IJ.openImage("elipse.jpg");
 		CustomImage image = new CustomImage(imagePlus);
 		add(image); 
 		

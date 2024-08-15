@@ -26,7 +26,7 @@ public class IJFunctions {
 				if (processor.isBinary()) {
 					IJ.run("Make Binary", "");
 				}
-				IJ.run(image, "Skeletonize", "");
+				IJ.run(image, "Skeletonize", "");				
 				return image;
 			}
 		};
