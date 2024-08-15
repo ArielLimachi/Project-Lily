@@ -13,4 +13,6 @@ public class Constants {
 	public static final int Y_AXIS_WORD_OFFSET = 20;
 	public static final int BORDER_HORIZONTAL_OFFSET = 2;
 	public static final int BORDER_VERTICAL_OFFSET = 2;
+	//Custom Image Constants
+	public static final double REESCALE_FACTOR = 0.5;
 }

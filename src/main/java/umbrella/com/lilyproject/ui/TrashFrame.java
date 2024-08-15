@@ -4,9 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import ij.IJ;
+import ij.ImagePlus;
+import umbrella.com.lilyprofect.utils.SwingUtils;
+import umbrella.com.lilyproject.ImageProcessor.CustomImage;
 import umbrella.com.lilyproject.ui.graphicComponents.GridComponent;
 import umbrella.com.lilyproject.ui.graphicElements.CustomWord;
 import umbrella.com.lilyproject.ui.graphicElements.WordBox;
@@ -41,7 +46,12 @@ public class TrashFrame extends JFrame {
 		Dimension wordBoxDimension = new Dimension(200,200);
 		WordBox wordBox = new WordBox("Pame", wordBoxDimension, new Font("Serif", Font.BOLD, 24), Color.BLACK);
 		wordBox.setSize(wordBoxDimension);
-		add(wordBox);
+		//add(wordBox);
+		
+		//ImagePlus imagePlus = IJ.openImage("letra A.jpg");
+		ImagePlus imagePlus = IJ.openImage("elipse.jpg");
+		CustomImage image = new CustomImage(imagePlus);
+		add(image); 
 		
 		setVisible(true);
 	}

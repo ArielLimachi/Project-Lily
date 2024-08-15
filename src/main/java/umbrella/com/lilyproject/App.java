@@ -3,7 +3,10 @@ package umbrella.com.lilyproject;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JFrame;
+
 import umbrella.com.lilyprofect.utils.SwingUtils;
+import umbrella.com.lilyproject.ImageProcessor.ImageProcessingMainFrame;
 import umbrella.com.lilyproject.testers.UsbTester;
 import umbrella.com.lilyproject.ui.GenericPanel;
 import umbrella.com.lilyproject.ui.TrashFrame;
@@ -103,7 +106,7 @@ public class App {
         }
 
         // Display the original image
-        image.show();
+        //image.show();
 
         // Get the image processor
         ImageProcessor processor = image.getProcessor();
@@ -117,5 +120,9 @@ public class App {
 
         // Display the processed image
         //image.show();
+        
+        ImagePlus imagePlus = IJ.openImage("letra A.jpg");
+        ImageProcessingMainFrame ij = new ImageProcessingMainFrame(imagePlus);
+        ij.setVisible(true);
 	}
 }
