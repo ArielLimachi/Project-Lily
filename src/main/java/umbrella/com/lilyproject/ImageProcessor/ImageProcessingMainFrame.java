@@ -19,8 +19,8 @@ import javax.swing.SwingUtilities;
 
 import ij.IJ;
 import ij.ImagePlus;
-import umbrella.com.lilyprofect.utils.IJFunctions;
 import umbrella.com.lilyprofect.utils.SwingUtils;
+import umbrella.com.lilyprofect.utils.IJUtils.IJFunctions;
 import umbrella.com.lilyproject.ui.graphicComponents.GridComponent;
 
 public class ImageProcessingMainFrame extends JFrame {
