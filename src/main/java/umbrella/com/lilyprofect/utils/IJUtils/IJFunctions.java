@@ -19,8 +19,15 @@ public class IJFunctions {
 
 		ijFunctions = new HashMap<>();
 
-		addFunction("skeletonize", new SkeletonizeOperation());
-		addFunction("gaussianBlur", new GaussianBlurOperation());
+		addFunction("1. Make Binary", new ConvertToBinaryOperation());
+		addFunction("2. Fill Holes", new FillHolesOperation());
+		addFunction("3. Outline", new OutlineOperation());
+		addFunction("4. Skeletonize", new SkeletonizeOperation());
+		addFunction("gaussianBlur", new GaussianBlurOperation());		
+		addFunction("Find Edges", new EdgeDetectionOperation());
+		addFunction("Convert to 8 bit", new ConvertTo8BitOperation());
+		addFunction("Convert to Mask", new ConvertToMaskOperation());
+		
 	}
 
 	public void addFunction(String name, Function<ImagePlus, ImagePlus> function) {

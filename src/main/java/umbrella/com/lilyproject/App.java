@@ -121,7 +121,7 @@ public class App {
         // Display the processed image
         //image.show();
         
-        ImagePlus imagePlus = IJ.openImage("letra A.jpg");
+        ImagePlus imagePlus = IJ.openImage("uno_jpg.jpg");
         ImageProcessingMainFrame ij = new ImageProcessingMainFrame(imagePlus);
         ij.setVisible(true);
 	}

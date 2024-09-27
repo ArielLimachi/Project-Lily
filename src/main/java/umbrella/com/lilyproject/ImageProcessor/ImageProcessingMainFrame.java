@@ -79,14 +79,6 @@ public class ImageProcessingMainFrame extends JFrame {
 	}
 	
 	private void buildButtonFunctionsGrid() {
-		
-		/*
-		// Retrieve and apply an operation
-        ImagePlus image = ... // Load an image
-        Function<ImagePlus, ImagePlus> skeletonize = ijFunctions.getFunction("skeletonize");
-        ImagePlus result = skeletonize.apply(image);
-		*/
-		
 		processButtons = new ArrayList<JButton>();
 		Map<String, Function> functions = this.functions.getFunctions();
 
