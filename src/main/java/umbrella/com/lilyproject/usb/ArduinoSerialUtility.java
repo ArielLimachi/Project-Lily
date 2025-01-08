@@ -1,105 +1,78 @@
 package umbrella.com.lilyproject.usb;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Observable;
 
 import com.fazecast.jSerialComm.*;
 
-public class ArduinoSerialUtility {
+public class ArduinoSerialUtility extends Observable {
+    protected SerialPort arduinoPort;
+    protected List<Character> receivedDataBuffer = new ArrayList<>();
+    String receivedData;
 
-	private SerialPort arduinoPort;
-	private final List<Character> receivedDataBuffer = new ArrayList<>();
-	private final Lock bufferLock = new ReentrantLock();
-	private String receivedData;
-	private final PropertyChangeSupport support;
+    public ArduinoSerialUtility() {
+        arduinoPort = null;
+    }
 
-	public ArduinoSerialUtility() {
-		arduinoPort = null;
-		support = new PropertyChangeSupport(this);
-	}
+    public boolean openPort(String portName, int baudRate) {
+        arduinoPort = SerialPort.getCommPort(portName);
+        arduinoPort.setComPortParameters(baudRate, 8, 1, 0);
+        return arduinoPort.openPort();
+    }
 
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		support.addPropertyChangeListener(listener);
-	}
+    public boolean closePort() {
+        if (arduinoPort != null && arduinoPort.isOpen()) {
+            return arduinoPort.closePort();
+        }
+        return false;
+    }
 
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		support.removePropertyChangeListener(listener);
-	}
+    public void initializeReader() {
+        arduinoPort.addDataListener(new SerialPortDataListener() {
+            @Override
+            public void serialEvent(SerialPortEvent event) {
+                if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
+                    byte[] newData = new byte[arduinoPort.bytesAvailable()];
+                    arduinoPort.readBytes(newData, newData.length);
+                    for (byte b : newData) {
+                        char receivedChar = (char) b;
+                        if (receivedChar == '\n') {
+                            processReceivedData();
+                        } else {
+                            receivedDataBuffer.add(receivedChar);
+                        }
+                    }
+                }
+            }
 
-	public boolean openPort(String portName, int baudRate) {
-		arduinoPort = SerialPort.getCommPort(portName);
-		arduinoPort.setComPortParameters(baudRate, 8, 1, 0);
-		return arduinoPort.openPort();
-	}
+            @Override
+            public int getListeningEvents() {
+                return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+            }
+        });
+    }
 
-	public void closePort() {
-		if (arduinoPort != null && arduinoPort.isOpen()) {
-			arduinoPort.closePort();
-		}
-	}
+    private void processReceivedData() {
+        StringBuilder receivedDataBuilder = new StringBuilder();
+        for (Character c : receivedDataBuffer) {
+            receivedDataBuilder.append(c);
+        }
+        receivedDataBuffer.clear();
+        receivedData = receivedDataBuilder.toString().trim();
+        System.out.println("Received from Arduino: " + receivedData);
+        setChanged();
+        notifyObservers();
+    }
 
-	public void initializeReader() {
-		arduinoPort.addDataListener(new SerialPortDataListener() {
+    public String getReceivedData() {
+        return receivedData;
+    }
 
-			@Override
-			public void serialEvent(SerialPortEvent event) {
-				if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_AVAILABLE) {
-					byte[] newData = new byte[arduinoPort.bytesAvailable()];
-					arduinoPort.readBytes(newData, newData.length);
-
-					for (byte b : newData) {
-						char receivedChar = (char) b;
-						if (receivedChar == '\n') {
-							processReceivedData();
-						} else {
-							bufferLock.lock();
-							try {
-								receivedDataBuffer.add(receivedChar);
-							} finally {
-								bufferLock.unlock();
-							}
-						}
-					}
-				}
-			}
-
-			@Override
-			public int getListeningEvents() {
-				return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
-			}
-		});
-	}
-
-	private void processReceivedData() {
-		StringBuilder receivedDataBuilder = new StringBuilder();
-		bufferLock.lock();
-		try {
-			for (Character c : receivedDataBuffer) {
-				receivedDataBuilder.append(c);
-			}
-			receivedDataBuffer.clear();
-		} finally {
-			bufferLock.unlock();
-		}
-
-		String oldReceivedData = receivedData;
-		receivedData = receivedDataBuilder.toString().trim();
-
-		support.firePropertyChange("receivedData", oldReceivedData, receivedData);
-	}
-
-	public String getReceivedData() {
-		return receivedData;
-	}
-
-	public void sendData(String data) {
-		if (arduinoPort == null || !arduinoPort.isOpen()) {
-			return;
-		}
-		arduinoPort.writeBytes((data + "\n").getBytes(), data.length() + 1);
-	}
+    public boolean sendData(String data) {
+        if (arduinoPort == null || !arduinoPort.isOpen()) {
+            return false;
+        }
+        return arduinoPort.writeBytes((data + "\n").getBytes(), data.length() + 1) > 0;
+    }
 }
