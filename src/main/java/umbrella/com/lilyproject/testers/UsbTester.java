@@ -2,13 +2,12 @@ package umbrella.com.lilyproject.testers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -17,15 +16,14 @@ import umbrella.com.lilyproject.usb.UsbCommunicator;
 
 public class UsbTester extends JFrame implements ActionListener {
 
-	JButton openPort;
-	JButton closePort;
-	JButton send;
-	JLabel sendData;
-	JTextField data;	
-	JScrollPane scrollPane;
-	JTextArea receivedData;
-	
-	UsbCommunicator comm;
+	private JButton openPort;
+	private JButton closePort;
+	private JButton send;
+	private JLabel sendData;
+	private JTextField data;
+	private JTextArea receivedData;
+
+	private final UsbCommunicator comm;
 
 	public UsbTester() {
 		setLayout(null);
@@ -35,16 +33,17 @@ public class UsbTester extends JFrame implements ActionListener {
 
 		drawComponents();
 		comm = new UsbCommunicator();
-		
-		Observer observer = new Observer() {
-			
+
+		PropertyChangeListener listener = new PropertyChangeListener() {
 			@Override
-			public void update(Observable o, Object arg) {
-				receivedData.append(comm.getReceivedData() + "\n");
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("receivedData".equals(evt.getPropertyName())) {
+					receivedData.append(comm.getReceivedData() + "\n");
+				}
 			}
 		};
-		
-		comm.addObserver(observer);
+
+		comm.addPropertyChangeListener(listener);
 
 		setVisible(true);
 	}
@@ -67,17 +66,16 @@ public class UsbTester extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(openPort)) {
-			comm.initializeArduino();	
-			//receivedData.append("XD " + comm.getData());
+			comm.initializeArduino();
 		}
 
 		if (e.getSource().equals(closePort)) {
-			comm.closePort();
+			comm.closeConnection();
 		}
-		
+
 		if (e.getSource().equals(send)) {
 			comm.sendData(data.getText());
 		}
 	}
-
 }
+

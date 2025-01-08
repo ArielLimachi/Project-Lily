@@ -1,34 +1,45 @@
 package umbrella.com.lilyproject.usb;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.fazecast.jSerialComm.*;
 
-public class ArduinoSerialUtility extends Observable{
+public class ArduinoSerialUtility {
 
-	protected SerialPort arduinoPort;
-	protected List<Character> receivedDataBuffer = new ArrayList<>();
-	
-	String receivedData;
+	private SerialPort arduinoPort;
+	private final List<Character> receivedDataBuffer = new ArrayList<>();
+	private final Lock bufferLock = new ReentrantLock();
+	private String receivedData;
+	private final PropertyChangeSupport support;
 
 	public ArduinoSerialUtility() {
 		arduinoPort = null;
+		support = new PropertyChangeSupport(this);
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
 	}
 
 	public boolean openPort(String portName, int baudRate) {
 		arduinoPort = SerialPort.getCommPort(portName);
 		arduinoPort.setComPortParameters(baudRate, 8, 1, 0);
-
 		return arduinoPort.openPort();
 	}
 
-	public boolean closePort() {
+	public void closePort() {
 		if (arduinoPort != null && arduinoPort.isOpen()) {
-			return arduinoPort.closePort();
+			arduinoPort.closePort();
 		}
-		return false;
 	}
 
 	public void initializeReader() {
@@ -45,7 +56,12 @@ public class ArduinoSerialUtility extends Observable{
 						if (receivedChar == '\n') {
 							processReceivedData();
 						} else {
-							receivedDataBuffer.add(receivedChar);
+							bufferLock.lock();
+							try {
+								receivedDataBuffer.add(receivedChar);
+							} finally {
+								bufferLock.unlock();
+							}
 						}
 					}
 				}
@@ -60,26 +76,30 @@ public class ArduinoSerialUtility extends Observable{
 
 	private void processReceivedData() {
 		StringBuilder receivedDataBuilder = new StringBuilder();
-		for (Character c : receivedDataBuffer) {
-			receivedDataBuilder.append(c);
+		bufferLock.lock();
+		try {
+			for (Character c : receivedDataBuffer) {
+				receivedDataBuilder.append(c);
+			}
+			receivedDataBuffer.clear();
+		} finally {
+			bufferLock.unlock();
 		}
-		receivedDataBuffer.clear();
 
+		String oldReceivedData = receivedData;
 		receivedData = receivedDataBuilder.toString().trim();
-		System.out.println("Received from Arduino: " + receivedData);
-		
-		setChanged();
-        notifyObservers();
+
+		support.firePropertyChange("receivedData", oldReceivedData, receivedData);
 	}
-	
+
 	public String getReceivedData() {
 		return receivedData;
 	}
 
-	public boolean sendData(String data) {
+	public void sendData(String data) {
 		if (arduinoPort == null || !arduinoPort.isOpen()) {
-			return false;
+			return;
 		}
-		return arduinoPort.writeBytes((data + "\n").getBytes(), data.length() + 1) > 0;
-	}			
+		arduinoPort.writeBytes((data + "\n").getBytes(), data.length() + 1);
+	}
 }

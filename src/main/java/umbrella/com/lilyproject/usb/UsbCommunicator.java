@@ -1,35 +1,40 @@
 package umbrella.com.lilyproject.usb;
 
-import java.util.Observer;
+import java.beans.PropertyChangeListener;
 
 import umbrella.com.lilyprofect.utils.Constants;
 
-public class UsbCommunicator extends ArduinoSerialUtility {
+public class UsbCommunicator {
+
+	private final ArduinoSerialUtility arduinoSerialUtility;
 
 	public UsbCommunicator() {
+		this.arduinoSerialUtility = new ArduinoSerialUtility();
 	}
 
 	public void initializeArduino() {
-		openPort(Constants.PORT_NAME, Constants.BAUDRATE);
-		initializeReader();
-	}
-	
-	public void closeConnection() {
-		closePort();
-	}
-	
-	public void setObserver(Observer observer) {
-		addObserver(observer);
+		boolean opened = arduinoSerialUtility.openPort(Constants.PORT_NAME, Constants.BAUDRATE);
+		arduinoSerialUtility.initializeReader();
 	}
 
-	/*
-	 * @Override public void sendData(String data) { comm.sendData(data); }
-	 * 
-	 * @Override public void openPort() { comm.openPort(Constants.PORT_NAME,
-	 * Constants.BAUDRATE); comm.initializeReader(); }
-	 * 
-	 * @Override public void closePort() { comm.closePort(); }
-	 * 
-	 * @Override public String getData() { return comm.getReceivedData(); }
-	 */
+	public void closeConnection() {
+		arduinoSerialUtility.closePort();
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		arduinoSerialUtility.addPropertyChangeListener(listener);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		arduinoSerialUtility.removePropertyChangeListener(listener);
+	}
+
+	public String getReceivedData() {
+		return arduinoSerialUtility.getReceivedData();
+	}
+
+	public void sendData(String data) {
+		arduinoSerialUtility.sendData(data);
+	}
 }
+
