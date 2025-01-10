@@ -1,32 +1,63 @@
 package umbrella.com.lilyproject.cnc;
 
-public abstract class AbstractAxis implements IsMovable{
+public abstract class AbstractAxis {
 
-	protected String name;
-	protected int size;
-	protected int currentPosition;
+    protected String name;
+    protected int size;
+    protected int currentPosition;
+    protected boolean atFinalPosition;
+    protected boolean atStartPosition;
 
-	public String getName() {
-		return name;
-	}
+    protected MovementController movementController;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    // Constructor
+    public AbstractAxis(String name, int size, MovementController movementController) {
+        this.name = name;
+        this.size = size;
+        this.movementController = movementController;
+        this.currentPosition = 0;
+        this.atFinalPosition = false;
+        this.atStartPosition = true;
+    }
 
-	public int getSize() {
-		return size;
-	}
+    // Getters
+    public String getName() {
+        return name;
+    }
 
-	public void setSize(int size) {
-		this.size = size;
-	}
+    public int getSize() {
+        return size;
+    }
 
-	public int getCurrentPosition() {
-		return currentPosition;
-	}
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
 
-	public void setCurrentPosition(int currentPosition) {
-		this.currentPosition = currentPosition;
-	}
+    public boolean isAtFinalPosition() {
+        return atFinalPosition;
+    }
+
+    public boolean isAtStartPosition() {
+        return atStartPosition;
+    }
+
+    // Setters with validation
+    public void setCurrentPosition(int currentPosition) {
+        if (currentPosition >= 0 && currentPosition <= size) {
+            this.currentPosition = currentPosition;
+            this.atStartPosition = currentPosition == 0;
+            this.atFinalPosition = currentPosition == size;
+        } else {
+            throw new IllegalArgumentException("Position must be within the range of 0 to " + size);
+        }
+    }
+
+    // Abstract methods to be implemented by subclasses
+    public abstract void moveToStartPosition();
+
+    public abstract void moveToFinalPosition();
+
+    public abstract void moveToPosition(int position);
+
 }
+
