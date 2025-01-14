@@ -29,6 +29,12 @@ public class SwingUtils {
 		return button;
 	}
 
+	public static JButton getButton(String text, ActionListener actionListener) {
+		JButton button = new JButton(text);
+		button.addActionListener(actionListener);
+		return button;
+	}
+
 	public static JLabel getLabel(String text, int x, int y, int width, int height) {
 		JLabel label = new JLabel(text);
 		label.setBounds(x, y, width, height);
@@ -38,6 +44,11 @@ public class SwingUtils {
 	public static JTextField getTextField(String text, int x, int y, int width, int height) {
 		JTextField textField = new JTextField(text);
 		textField.setBounds(x, y, width, height);
+		return textField;
+	}
+
+	public static JTextField getTextField(String text) {
+		JTextField textField = new JTextField(text);
 		return textField;
 	}
 

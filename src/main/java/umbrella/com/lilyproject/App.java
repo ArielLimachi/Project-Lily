@@ -9,8 +9,11 @@ import ij.process.ImageProcessor;
 import umbrella.com.lilyproject.cnc.ArduinoMovementController;
 import umbrella.com.lilyproject.cnc.Axis;
 import umbrella.com.lilyproject.cnc.MovementController;
+import umbrella.com.lilyproject.cnc.graphics.CncTester;
 import umbrella.com.lilyproject.testers.UsbTester;
 import umbrella.com.lilyproject.usb.UsbCommunicator;
+
+import javax.swing.*;
 
 
 public class App {
@@ -18,7 +21,7 @@ public class App {
 
         //UsbTester usb = new UsbTester();
         //usb.setVisible(true);
-
+/*
         MovementController controller = new ArduinoMovementController();
 
         Axis x = new Axis("Eje X", 1500, controller);
@@ -30,7 +33,14 @@ public class App {
         x.moveToPosition(1400);
 
         x.moveToFinalPosition();
+*/
 
+        JFrame frame = new JFrame("Cartesian Plane");
+        CncTester panel = new CncTester();
+        frame.add(panel);
+        frame.setSize(800, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
             /*
 		// Open an image file

@@ -5,6 +5,8 @@ public abstract class AbstractAxis {
     protected String name;
     protected int size;
     protected int currentPosition;
+    protected int velocity;
+    protected int acceleration;
     protected boolean atFinalPosition;
     protected boolean atStartPosition;
 
@@ -27,6 +29,14 @@ public abstract class AbstractAxis {
 
     public int getSize() {
         return size;
+    }
+
+    public int getVelocity() {
+        return velocity;
+    }
+
+    public int getAcceleration() {
+        return acceleration;
     }
 
     public int getCurrentPosition() {
@@ -52,12 +62,19 @@ public abstract class AbstractAxis {
         }
     }
 
+    public void setVelocity(int velocity){
+        this.velocity = velocity;
+    }
+
+    public void setAcceleration(int acceleration){
+        this.acceleration = acceleration;
+    }
+
     // Abstract methods to be implemented by subclasses
     public abstract void moveToStartPosition();
 
     public abstract void moveToFinalPosition();
 
     public abstract void moveToPosition(int position);
-
 }
 
