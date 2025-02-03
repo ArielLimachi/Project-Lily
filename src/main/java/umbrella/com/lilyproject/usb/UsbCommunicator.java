@@ -5,31 +5,22 @@ import java.util.Observer;
 import umbrella.com.lilyprofect.utils.Constants;
 
 public class UsbCommunicator extends ArduinoSerialUtility {
+    public UsbCommunicator() {
+    }
 
-	public UsbCommunicator() {
-	}
+    public boolean initializeArduino() {
+        boolean portIsOpened = openPort(Constants.PORT_NAME, Constants.BAUDRATE);
+        initializeReader();
+        return portIsOpened;
+    }
 
-	public void initializeArduino() {
-		openPort(Constants.PORT_NAME, Constants.BAUDRATE);
-		initializeReader();
-	}
-	
-	public void closeConnection() {
-		closePort();
-	}
-	
-	public void setObserver(Observer observer) {
-		addObserver(observer);
-	}
+    public void closeConnection() {
+        closePort();
+    }
 
-	/*
-	 * @Override public void sendData(String data) { comm.sendData(data); }
-	 * 
-	 * @Override public void openPort() { comm.openPort(Constants.PORT_NAME,
-	 * Constants.BAUDRATE); comm.initializeReader(); }
-	 * 
-	 * @Override public void closePort() { comm.closePort(); }
-	 * 
-	 * @Override public String getData() { return comm.getReceivedData(); }
-	 */
+    public void setObserver(Observer observer) {
+        addObserver(observer);
+    }
 }
+
+

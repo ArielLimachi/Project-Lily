@@ -1,102 +1,48 @@
 package umbrella.com.lilyproject;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.JFrame;
-
-import umbrella.com.lilyprofect.utils.SwingUtils;
 import umbrella.com.lilyproject.ImageProcessor.ImageProcessingMainFrame;
-import umbrella.com.lilyproject.testers.UsbTester;
-import umbrella.com.lilyproject.ui.GenericPanel;
-import umbrella.com.lilyproject.ui.TrashFrame;
-import umbrella.com.lilyproject.usb.ArduinoSerialUtility;
-import umbrella.com.lilyproject.usb.CustomUsbDataObservable;
-import umbrella.com.lilyproject.usb.UsbCommunicator;
 
 import ij.IJ;
 import ij.ImagePlus;
 import ij.plugin.filter.GaussianBlur;
 import ij.process.ImageProcessor;
+import umbrella.com.lilyproject.cnc.ArduinoMovementController;
+import umbrella.com.lilyproject.cnc.Axis;
+import umbrella.com.lilyproject.cnc.MovementController;
+import umbrella.com.lilyproject.cnc.graphics.CncTester;
+import umbrella.com.lilyproject.testers.UsbTester;
+import umbrella.com.lilyproject.usb.UsbCommunicator;
 
-/**
- * Hello world!
- *
- */
+import javax.swing.*;
+
+
 public class App {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		// System.out.println("Hello World!");
+        //UsbTester usb = new UsbTester();
+        //usb.setVisible(true);
+/*
+        MovementController controller = new ArduinoMovementController();
 
-		// TrashFrame frame = new TrashFrame();
+        Axis x = new Axis("Eje X", 1500, controller);
 
-		/*
-		ArduinoSerialUtility serialUtility = new ArduinoSerialUtility();
+        x.setCurrentPosition(100);
 
-		// Replace "COM3" with the correct port name for your Arduino
-		String portName = "COM4";
-		int baudRate = 9600;
+        x.moveToStartPosition();
 
-		// Open the port
-		if (serialUtility.openPort(portName, baudRate)) {
-			System.out.println("Port opened successfully.");
+        x.moveToPosition(1400);
 
-			// Read and print data from Arduino
-			for (int i = 0; i < 5; i++) {
-				String receivedData = serialUtility.readData();
-				if (receivedData != null) {
-					System.out.println("Received data: " + receivedData);
-				} else {
-					System.err.println("Failed to read data.");
-				}
+        x.moveToFinalPosition();
+*/
 
-				try {
-					Thread.sleep(2000); // Wait for 2 seconds before reading the next data packet
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+        JFrame frame = new JFrame("Cartesian Plane");
+        CncTester panel = new CncTester();
+        frame.add(panel);
+        frame.setSize(800, 800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
-			// Close the port
-			if (serialUtility.closePort()) {
-				System.out.println("Port closed.");
-			} else {
-				System.err.println("Failed to close the port.");
-			}
-		} else {
-			System.err.println("Failed to open the port.");
-		}
-		*/
-		
-		/*
-		UsbCommunicator comm = new UsbCommunicator();
-		comm.openPort();
-		comm.sendData("hola");
-		comm.receiveData();
-		comm.closePort();
-		*/
-		
-		//UsbTester usbTestFrame = new UsbTester(); //23 july this was commented
-		
-		/*
-		CustomUsbDataObservable usbObservable = new CustomUsbDataObservable();
-		
-		Observer observer = new Observer() {
-			
-			@Override
-			public void update(Observable o, Object arg) {
-				System.out.println("Flag is now true! Eventito!!");
-			}
-		};
-		
-		usbObservable.addObserver(observer);
-		
-		usbObservable.setFlag(true);
-		*/
-		
-		//TrashFrame tf = new TrashFrame();
-		//tf.setVisible(true);		
-		
+            /*
 		// Open an image file
         ImagePlus image = IJ.openImage("elipse.jpg");
         
@@ -124,5 +70,7 @@ public class App {
         ImagePlus imagePlus = IJ.openImage("uno_jpg.jpg");
         ImageProcessingMainFrame ij = new ImageProcessingMainFrame(imagePlus);
         ij.setVisible(true);
-	}
+
+             */
+    }
 }
