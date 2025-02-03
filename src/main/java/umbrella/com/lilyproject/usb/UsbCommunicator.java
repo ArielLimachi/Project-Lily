@@ -8,9 +8,10 @@ public class UsbCommunicator extends ArduinoSerialUtility {
     public UsbCommunicator() {
     }
 
-    public void initializeArduino() {
-        openPort(Constants.PORT_NAME, Constants.BAUDRATE);
+    public boolean initializeArduino() {
+        boolean portIsOpened = openPort(Constants.PORT_NAME, Constants.BAUDRATE);
         initializeReader();
+        return portIsOpened;
     }
 
     public void closeConnection() {

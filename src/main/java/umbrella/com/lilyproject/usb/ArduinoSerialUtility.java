@@ -28,6 +28,10 @@ public class ArduinoSerialUtility extends Observable {
         return false;
     }
 
+    public boolean portIsOpen(){
+        return arduinoPort.isOpen();
+    }
+
     public void initializeReader() {
         arduinoPort.addDataListener(new SerialPortDataListener() {
             @Override

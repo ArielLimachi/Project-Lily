@@ -9,11 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 public class ObjectPositionSimulator extends JPanel implements ActionListener {
     private int x = 50; // Initial position of the point
@@ -25,7 +21,6 @@ public class ObjectPositionSimulator extends JPanel implements ActionListener {
 
     private Axis axis;
 
-    UsbCommunicator arduino;
 
     JButton forwardButton;
     JButton backwardButton;
@@ -48,7 +43,7 @@ public class ObjectPositionSimulator extends JPanel implements ActionListener {
         stopButton = SwingUtils.getButton("||", this);
 
         goToPosition = SwingUtils.getButton("Go", this);
-        position = SwingUtils.getTextField("100");
+        position = SwingUtils.getTextField("1500");
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(backwardButton);
@@ -64,7 +59,7 @@ public class ObjectPositionSimulator extends JPanel implements ActionListener {
 
     private void initializeAxis() {
         MovementController controller = new ArduinoMovementController();
-        axis = new Axis("Eje X", 1500, controller);
+        axis = new Axis("Eje X", 2000, controller);
     }
 
     @Override
@@ -87,7 +82,7 @@ public class ObjectPositionSimulator extends JPanel implements ActionListener {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Object Position Simulator");
-        ObjectPositionSimulator simulator = new ObjectPositionSimulator(1500);
+        ObjectPositionSimulator simulator = new ObjectPositionSimulator(2000);
 
         frame.add(simulator);
         frame.setSize(800, 600);
