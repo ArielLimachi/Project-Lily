@@ -19,30 +19,17 @@ import javax.swing.*;
 public class App {
     public static void main(String[] args) {
 
-        //UsbTester usb = new UsbTester();
-        //usb.setVisible(true);
-/*
-        MovementController controller = new ArduinoMovementController();
-
-        Axis x = new Axis("Eje X", 1500, controller);
-
-        x.setCurrentPosition(100);
-
-        x.moveToStartPosition();
-
-        x.moveToPosition(1400);
-
-        x.moveToFinalPosition();
-*/
-
+        /*
         JFrame frame = new JFrame("Cartesian Plane");
         CncTester panel = new CncTester();
         frame.add(panel);
         frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        */
 
-            /*
+
+        /*
 		// Open an image file
         ImagePlus image = IJ.openImage("elipse.jpg");
         
@@ -66,11 +53,15 @@ public class App {
 
         // Display the processed image
         //image.show();
-        
+
+
+         */
+
+
         ImagePlus imagePlus = IJ.openImage("uno_jpg.jpg");
         ImageProcessingMainFrame ij = new ImageProcessingMainFrame(imagePlus);
         ij.setVisible(true);
 
-             */
+
     }
 }

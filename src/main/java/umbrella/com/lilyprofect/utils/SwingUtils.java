@@ -1,11 +1,6 @@
 package umbrella.com.lilyprofect.utils;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
@@ -131,5 +126,9 @@ public class SwingUtils {
 		int height = (int) Math.round(imagePlus.getHeight() * percentageFactorReduction);
 
 		return new Dimension(width, height);
+	}
+
+	public static Dimension getScreenDimension(){
+		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 }

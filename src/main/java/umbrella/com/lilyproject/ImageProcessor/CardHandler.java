@@ -2,8 +2,6 @@ package umbrella.com.lilyproject.ImageProcessor;
 
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.Container;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -44,6 +42,10 @@ public class CardHandler<Card> extends JPanel {
 
 	public void previous() {
 		layout.previous(this);
+	}
+
+	public void first(){
+		layout.first(this);
 	}
 	
 	public int getCardSetSize() {

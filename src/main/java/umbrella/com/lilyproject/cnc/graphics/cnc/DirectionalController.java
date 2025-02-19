@@ -136,5 +136,15 @@ public class DirectionalController extends JPanel implements MovementController<
             move("y" + "," + "constantMovementBackward" + "," + steps + "," + speed);
             System.out.println("west");
         }
+
+        if (obj.equals(pencilUp)) {
+            move("z" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            System.out.println("pencil up");
+        }
+
+        if (obj.equals(pencilDown)) {
+            move("z" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            System.out.println("pencil down");
+        }
     }
 }
