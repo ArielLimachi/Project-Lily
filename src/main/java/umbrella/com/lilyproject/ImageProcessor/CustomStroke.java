@@ -45,26 +45,6 @@ public class CustomStroke {
         neighborhood.add(point7);
         neighborhood.add(point8);
 
-
-        Point neighborPoint = null;
-
-        if (isNeighborPoint(originPoint, point1)) {
-            neighborPoint = point1;
-        } else if (isNeighborPoint(originPoint, point2)) {
-            neighborPoint = point2;
-        } else if (isNeighborPoint(originPoint, point3)) {
-            neighborPoint = point3;
-        } else if (isNeighborPoint(originPoint, point4)) {
-            neighborPoint = point4;
-        } else if (isNeighborPoint(originPoint, point5)) {
-            neighborPoint = point5;
-        } else if (isNeighborPoint(originPoint, point6)) {
-            neighborPoint = point6;
-        } else if (isNeighborPoint(originPoint, point7)) {
-            neighborPoint = point7;
-        } else if (isNeighborPoint(originPoint, point8)) {
-            neighborPoint = point8;
-        }
         return neighborhood;
     }
 
@@ -83,8 +63,9 @@ public class CustomStroke {
     }
 
     public CustomStroke getStroke(Point origin, BufferedImage image) {
-        CustomStroke stroke = new CustomStroke();
+        CustomStroke stroke = null;
         while (getNextStrokeStep(origin, getNeighborhoodPoints(origin), image) != null) {
+            stroke = new CustomStroke();
             stroke.addPoint(origin);
             //we get the next Point that is black
             Point nextStrokePointPath = getNextStrokeStep(origin, getNeighborhoodPoints(origin), image);

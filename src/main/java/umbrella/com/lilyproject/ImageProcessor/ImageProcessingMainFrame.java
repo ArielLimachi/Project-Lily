@@ -125,7 +125,7 @@ public class ImageProcessingMainFrame extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        ImagePlus imagePlus = IJ.openImage("cuatro.png");
+        ImagePlus imagePlus = IJ.openImage("uno.png");
         ImageProcessingMainFrame ij = new ImageProcessingMainFrame(imagePlus);
         ij.setVisible(true);
     }
@@ -160,54 +160,12 @@ public class ImageProcessingMainFrame extends JFrame implements ActionListener {
 
                         Point whitePoint = new Point(x, y);
                         stroke = stroke.getStroke(whitePoint, bi);
-                        strokes.add(stroke);
-                    }
-                }
-            }
-            int a = 0;
-        }
-
-        if (set.equals(restore)) {
-            finalImage = imageSet.getCurrentCard();
-            BufferedImage bi = finalImage.getImagePlus().getBufferedImage();
-            int height = bi.getHeight();
-            int width = bi.getWidth();
-
-            List<CustomStroke> strokes = new ArrayList<>();
-            boolean[][] visited = new boolean[width][height]; // Track visited pixels
-
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    if (bi.getRGB(x, y) == -1 && !visited[x][y]) { // Find unvisited white pixel
-                        CustomStroke stroke = new CustomStroke();
-                        Stack<Point> stack = new Stack<>();
-                        stack.push(new Point(x, y));
-
-                        while (!stack.isEmpty()) {
-                            Point current = stack.pop();
-                            int cx = (int) current.getX();
-                            int cy = (int) current.getY();
-
-                            if (cx >= 0 && cx < width && cy >= 0 && cy < height &&
-                                    bi.getRGB(cx, cy) == -1 && !visited[cx][cy]) {
-                                stroke.addPoint(current);
-                                visited[cx][cy] = true;
-                                bi.setRGB(cx, cy, -16777216); // Mark as processed
-
-                                // Add neighbors to the stack
-                                stack.push(new Point(cx + 1, cy));
-                                stack.push(new Point(cx - 1, cy));
-                                stack.push(new Point(cx, cy + 1));
-                                stack.push(new Point(cx, cy - 1));
-                            }
+                        if (stroke != null) {
+                            strokes.add(stroke);
                         }
-
-                        strokes.add(stroke);
                     }
                 }
             }
-            int a = 0;
         }
-
     }
 }
