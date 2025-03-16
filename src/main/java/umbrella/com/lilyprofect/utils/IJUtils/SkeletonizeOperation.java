@@ -15,8 +15,7 @@ public class SkeletonizeOperation implements ImageJOperation<ImagePlus, ImagePlu
 			//IJ.run(image, "Make Binary", "");
 		}
 
-		// Optional: Invert the image if necessary (depends on the nature of the objects
-		// in the image)
+		//Optional: Invert the image if necessary (depends on the nature of the objects in the image)
 		//IJ.run(image, "Invert", "");
 
 		// Apply skeletonization

@@ -14,63 +14,24 @@ import umbrella.com.lilyproject.testers.UsbTester;
 import umbrella.com.lilyproject.usb.UsbCommunicator;
 
 import javax.swing.*;
+import java.util.Observable;
+import java.util.Observer;
 
 
 public class App {
     public static void main(String[] args) {
+        UsbCommunicator arduino = new UsbCommunicator();
+        arduino.initializeArduino();
 
-        //UsbTester usb = new UsbTester();
-        //usb.setVisible(true);
-/*
-        MovementController controller = new ArduinoMovementController();
+        Observer observer = new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                String data = (arduino.getReceivedData() + "\n");
+                System.out.println("wakita -> " + data);
+            }
+        };
+        arduino.addObserver(observer);
 
-        Axis x = new Axis("Eje X", 1500, controller);
-
-        x.setCurrentPosition(100);
-
-        x.moveToStartPosition();
-
-        x.moveToPosition(1400);
-
-        x.moveToFinalPosition();
-*/
-
-        JFrame frame = new JFrame("Cartesian Plane");
-        CncTester panel = new CncTester();
-        frame.add(panel);
-        frame.setSize(800, 800);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-            /*
-		// Open an image file
-        ImagePlus image = IJ.openImage("elipse.jpg");
-        
-        if (image == null) {
-            System.out.println("Could not open the image file.");
-            return;
-        }
-
-        // Display the original image
-        //image.show();
-
-        // Get the image processor
-        ImageProcessor processor = image.getProcessor();
-
-        // Apply Gaussian blur with sigma = 2.0
-        GaussianBlur blur = new GaussianBlur();
-        blur.blurGaussian(processor, 2.0, 2.0, 0.02);
-
-        // Update the image with the processed data
-        //image.updateAndDraw();
-
-        // Display the processed image
-        //image.show();
-        
-        ImagePlus imagePlus = IJ.openImage("uno_jpg.jpg");
-        ImageProcessingMainFrame ij = new ImageProcessingMainFrame(imagePlus);
-        ij.setVisible(true);
-
-             */
+        arduino.sendData("GOTOXY 500 500");
     }
 }

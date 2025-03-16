@@ -71,10 +71,10 @@ public abstract class AbstractAxis {
     }
 
     // Abstract methods to be implemented by subclasses
-    public abstract void moveToStartPosition();
+    public abstract void moveToStartPosition() throws InterruptedException;
 
-    public abstract void moveToFinalPosition();
+    public abstract void moveToFinalPosition() throws InterruptedException;
 
-    public abstract void moveToPosition(int position);
+    public abstract void moveToPosition(int position) throws InterruptedException;
 }
 

@@ -8,11 +8,11 @@ import java.awt.*;
 
 public class MainWindowCNC extends JFrame {
 
-    MovementController controller;
+    private MovementController controller;
 
-    DebugPanel debugPanel;
+    private DebugPanel debugPanel;
 
-    Container container;
+    private Container container;
 
     public MainWindowCNC() {
         setTitle("Lily-PC CNC Simulator");
@@ -23,6 +23,7 @@ public class MainWindowCNC extends JFrame {
         debugPanel = new DebugPanel();
         
         controller = new DirectionalController(new Dimension(440, 170));
+        //controller = new LilyCncController(new Dimension(440, 170));
         
         container = getContentPane();
 

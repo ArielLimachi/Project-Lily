@@ -1,10 +1,13 @@
 package umbrella.com.lilyproject.usb;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
 import com.fazecast.jSerialComm.*;
+import com.google.gson.Gson;
+import umbrella.com.lilyproject.ImageProcessor.CustomStroke;
 
 public class ArduinoSerialUtility extends Observable {
     protected SerialPort arduinoPort;
@@ -28,7 +31,7 @@ public class ArduinoSerialUtility extends Observable {
         return false;
     }
 
-    public boolean portIsOpen(){
+    public boolean portIsOpen() {
         return arduinoPort.isOpen();
     }
 
@@ -64,13 +67,17 @@ public class ArduinoSerialUtility extends Observable {
         }
         receivedDataBuffer.clear();
         receivedData = receivedDataBuilder.toString().trim();
-        System.out.println("Received from Arduino: " + receivedData);
+        //System.out.println("Received from Arduino: " + receivedData);
         setChanged();
         notifyObservers();
     }
 
     public String getReceivedData() {
         return receivedData;
+    }
+
+    public void resetReceivedData() {
+        receivedData = "";
     }
 
     public boolean sendData(String data) {

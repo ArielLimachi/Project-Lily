@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import ij.IJ;
 import ij.ImagePlus;
-import ij.plugin.filter.GaussianBlur;
-import ij.process.ImageProcessor;
 
 public class IJFunctions {
 
