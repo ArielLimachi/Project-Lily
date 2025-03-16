@@ -7,24 +7,22 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.function.Function;
 
 import javax.swing.*;
 
 import ij.IJ;
 import ij.ImagePlus;
-import ij.plugin.Coordinates;
-import ij.plugin.XYCoordinates;
 import umbrella.com.lilyprofect.utils.SwingUtils;
 import umbrella.com.lilyprofect.utils.IJUtils.IJFunctions;
 import umbrella.com.lilyproject.cnc.graphics.DebugPanel;
+import umbrella.com.lilyproject.cnc.graphics.cnc.LilyCncController;
 
 public class ImageProcessingMainFrame extends JFrame implements ActionListener {
 
     private JLabel title;
     private List<JButton> processButtons;
-    private JButton previous, restore, set;
+    private JButton previous, restore, set, print;
 
     private IJFunctions functions;
 
@@ -34,6 +32,8 @@ public class ImageProcessingMainFrame extends JFrame implements ActionListener {
     CardHandler<CustomImage> imageSet;
 
     private DebugPanel debugger;
+
+    private List<CustomStroke> strokes;
 
     public ImageProcessingMainFrame(ImagePlus imagePlus) {
         //setLayout(null);
@@ -66,11 +66,13 @@ public class ImageProcessingMainFrame extends JFrame implements ActionListener {
         previous = SwingUtils.getButton("Previous", this);
         restore = SwingUtils.getButton("Restore", this);
         set = SwingUtils.getButton("Set", this);
+        print = SwingUtils.getButton("Print", this);
 
         List<JButton> controlButtons = new ArrayList<>();
         controlButtons.add(previous);
         controlButtons.add(restore);
         controlButtons.add(set);
+        controlButtons.add(print);
 
         JPanel buttonsGridPanel = SwingUtils.getButtonInGridPanel(controlButtons);
         add(buttonsGridPanel, BorderLayout.EAST);
@@ -150,7 +152,7 @@ public class ImageProcessingMainFrame extends JFrame implements ActionListener {
             int height = bi.getHeight();
             int width = bi.getWidth();
 
-            List<CustomStroke> strokes = new ArrayList<>();
+            strokes = new ArrayList<>();
 
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
@@ -165,6 +167,16 @@ public class ImageProcessingMainFrame extends JFrame implements ActionListener {
                         }
                     }
                 }
+            }
+            int a = 3;
+        }
+
+        if (print.equals(obj)) {
+            LilyCncController cnc = new LilyCncController(new Dimension(10,10));
+            try {
+                cnc.move(strokes);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
             }
         }
     }

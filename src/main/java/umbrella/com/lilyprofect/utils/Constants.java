@@ -4,7 +4,7 @@ public class Constants {
 	
 	//Usb constants
 	public static final String PORT_NAME = "COM5";
-	public static final int BAUDRATE = 9600;
+	public static final int BAUDRATE = 19200;
 	//Usb message constants
 	public static final String MSG_PORT_OPENED_SUCCESSFULLY = "Port " + PORT_NAME + " opened successfully.";
 	public static final String MSG_PORT_CLOSED_SUCCESSFULLY = "Port " + PORT_NAME + " closed successfully.";

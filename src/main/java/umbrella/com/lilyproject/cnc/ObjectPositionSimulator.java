@@ -95,21 +95,21 @@ public class ObjectPositionSimulator extends JPanel implements ActionListener {
         if (e.getSource() == forwardButton) {
             x += step;
             points.add(new Point(x, y));
-            axis.moveToPosition(step);
+            //axis.moveToPosition(step);
             repaint();
         }
         if (e.getSource() == backwardButton) {
             x -= step;
             points.add(new Point(x, y));
-            axis.moveToPosition(step);
+            //axis.moveToPosition(step);
             repaint();
         }
         if (e.getSource() == stopButton) {
-            axis.moveToStartPosition();
+            //axis.moveToStartPosition();
         }
         if (e.getSource() == goToPosition) {
             int position = Integer.parseInt(this.position.getText());
-            axis.moveToPosition(position);
+            //axis.moveToPosition(position);
         }
     }
 }

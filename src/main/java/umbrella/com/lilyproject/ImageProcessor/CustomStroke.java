@@ -63,9 +63,8 @@ public class CustomStroke {
     }
 
     public CustomStroke getStroke(Point origin, BufferedImage image) {
-        CustomStroke stroke = null;
+        CustomStroke stroke = new CustomStroke();
         while (getNextStrokeStep(origin, getNeighborhoodPoints(origin), image) != null) {
-            stroke = new CustomStroke();
             stroke.addPoint(origin);
             //we get the next Point that is black
             Point nextStrokePointPath = getNextStrokeStep(origin, getNeighborhoodPoints(origin), image);

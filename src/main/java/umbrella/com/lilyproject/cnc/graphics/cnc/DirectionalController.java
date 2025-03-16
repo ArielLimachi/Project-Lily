@@ -1,5 +1,6 @@
 package umbrella.com.lilyproject.cnc.graphics.cnc;
 
+import umbrella.com.lilyprofect.utils.CncUtils;
 import umbrella.com.lilyprofect.utils.SwingUtils;
 import umbrella.com.lilyproject.cnc.MovementController;
 import umbrella.com.lilyproject.usb.UsbCommunicator;
@@ -93,58 +94,116 @@ public class DirectionalController extends JPanel implements MovementController<
     public void actionPerformed(ActionEvent event) {
         Object obj = event.getSource();
         if (obj.equals(north)) {
-            move("x" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            move("GOTOXY 2000 2000");
+        }
+
+        if (obj.equals(northeast)) {
+            move("GOTOXY 100 100");
+        }
+
+        if (obj.equals(northwest)) {
+
+        }
+
+        if (obj.equals(south)) {
+            move("GOTOXY 0 0");
+        }
+
+        if (obj.equals(southeast)) {
+
+        }
+
+        if (obj.equals(southwest)) {
+
+        }
+
+        if (obj.equals(east)) {
+            move("HOME_X");
+        }
+
+        if (obj.equals(west)) {
+            move("HOME_Y");
+        }
+
+        if (obj.equals(pencilUp)) {
+            move("PENCIL_UP");
+        }
+
+        if (obj.equals(pencilDown)) {
+            move("PENCIL_DOWN");
+        }
+    }
+
+    /*
+    public void actionPerformed(ActionEvent event) {
+        Object obj = event.getSource();
+        if (obj.equals(north)) {
+            //move("x" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            move(CncUtils.goNorth());
             System.out.println("north");
         }
 
         if (obj.equals(northeast)) {
-            move("x" + "," + "constantMovementForward" + "," + steps + "," + speed);
-            move("y" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            //move("x" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            //move("y" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            move(CncUtils.goNorth());
+            move(CncUtils.goEast());
             System.out.println("north-east");
         }
 
         if (obj.equals(northwest)) {
-            move("x" + "," + "constantMovementForward" + "," + steps + "," + speed);
-            move("y" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            //move("x" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            //move("y" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            move(CncUtils.goNorth());
+            move(CncUtils.goWest());
             System.out.println("north-west");
         }
 
         if (obj.equals(south)) {
-            move("x" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            //move("x" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            move(CncUtils.goSouth());
             System.out.println("south");
         }//goToStart
 
         if (obj.equals(southeast)) {
-            move("x" + "," + "constantMovementBackward" + "," + steps + "," + speed);
-            move("y" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            //move("x" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            //move("y" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            move(CncUtils.goSouth());
+            move(CncUtils.goEast());
             System.out.println("north-east");
         }
 
         if (obj.equals(southwest)) {
-            move("x" + "," + "constantMovementBackward" + "," + steps + "," + speed);
-            move("y" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            //move("x" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            //move("y" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            move(CncUtils.goSouth());
+            move(CncUtils.goWest());
             System.out.println("north-west");
         }
 
         if (obj.equals(east)) {
-            //move("goToStart");
-            move("y" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            //move("y" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            move(CncUtils.goEast());
             System.out.println("east");
         }
 
         if (obj.equals(west)) {
-            move("y" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            //move("y" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            move(CncUtils.goWest());
             System.out.println("west");
         }
 
         if (obj.equals(pencilUp)) {
-            move("z" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            //move("z" + "," + "constantMovementBackward" + "," + steps + "," + speed);
+            move(CncUtils.goUp());
             System.out.println("pencil up");
         }
 
         if (obj.equals(pencilDown)) {
-            move("z" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            //move("z" + "," + "constantMovementForward" + "," + steps + "," + speed);
+            move(CncUtils.goDown());
             System.out.println("pencil down");
         }
     }
+     */
 }

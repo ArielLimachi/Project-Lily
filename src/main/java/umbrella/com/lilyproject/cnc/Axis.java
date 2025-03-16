@@ -19,7 +19,7 @@ public class Axis extends AbstractAxis {
     }
 
     @Override
-    public void moveToStartPosition() {
+    public void moveToStartPosition() throws InterruptedException {
         axisData.put("position", 0);
         axisData.put("direction", 0); // -1  0  1 convention for movement backwards, stop and forward
         axisData.put("velocity", 2100);
@@ -32,13 +32,13 @@ public class Axis extends AbstractAxis {
     }
 
     @Override
-    public void moveToFinalPosition() {
+    public void moveToFinalPosition() throws InterruptedException {
         setCurrentPosition(this.size);
         movementController.move(this.size);
     }
 
     @Override
-    public void moveToPosition(int position) {
+    public void moveToPosition(int position) throws InterruptedException {
         //Compare Positions
         int currentPosition = getCurrentPosition();
         int deltaPosition = Math.abs(currentPosition - position);
